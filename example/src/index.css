@@ -3,3 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+/* add css styles here (optional) */
+.searchbar-collection-container{
+  display:none;
+}
+
