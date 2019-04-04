@@ -1,6 +1,6 @@
 {
   "name": "react-searchbar",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A customizable react search-bar",
   "author": "dhirajsriram",
   "license": "MIT",
@@ -59,6 +59,7 @@
     "dist"
   ],
   "dependencies": {
-    "react-icons": "^3.5.0"
+    "react-icons": "^3.5.0",
+    "rollup-plugin-css-bundle": "^1.0.4"
   }
 }
