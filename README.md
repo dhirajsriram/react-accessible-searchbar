@@ -68,8 +68,8 @@ This will inturn generate a HTML as the following
 ## Configurations
 React-searchbar provides users with the ability to configure the followin
 
-| `prop`  | Description              |  type | Example |
-|---------|--------------------------|----------|-------|
+| `prop`  | Description|  type | Example |
+|---------|------------|----------|-------|
 |handleFieldChange|A callback to the onChange event from the search bar| *function()* | ```handleFieldChange={this.handleFieldChange}```|
 
 ## License
