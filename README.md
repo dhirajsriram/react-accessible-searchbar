@@ -1,6 +1,10 @@
 # react-searchbar
 
-> A customizable react search-bar
+A prebuilt react searchbar with
+
+- Accessbility
+- Autosuggest / Autocomplete
+- Callbacks for search submission and value change
 
 [![NPM](https://img.shields.io/npm/v/react-searchbar.svg)](https://www.npmjs.com/package/react-searchbar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
