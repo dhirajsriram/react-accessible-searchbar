@@ -43,7 +43,7 @@ import Searchbar from 'react-searchbar'
 class Example extends Component {
   render () {
     return (
-      <Searchbar onChange={this.handleFieldChange} autosuggestCount={15} handleSearch={(e)=>this.handleSearch()} selectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
+      <Searchbar handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={(e)=>this.handleSearch()} selectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
     )
   }
 }
@@ -65,6 +65,12 @@ This will inturn generate a HTML as the following
    </div>
 </form>
 ```
+## Configurations
+React-searchbar provides users with the ability to configure the followin
+
+| `prop`  | Description              |  type | Example |
+|---------|--------------------------|----------|-------|
+|handleFieldChange|A callback to onChange from the search bar| *function()* | handleFieldChange={this.handleFieldChange}|
 
 ## License
 
