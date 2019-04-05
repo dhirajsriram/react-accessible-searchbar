@@ -66,7 +66,7 @@ This will inturn generate a HTML as the following
 </form>
 ```
 ## Configurations
-React-searchbar provides users with the ability to configure the followin
+React-searchbar provides users with the ability to configure the following through props
 
 | `prop`  | Description|  type | Example |
 |---------|------------|----------|-------|
