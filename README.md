@@ -19,12 +19,12 @@ npm install --save react-searchbar
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-searchbar'
+import Searchbar from 'react-searchbar'
 
 class Example extends Component {
   render () {
     return (
-      <MyComponent />
+      <Searchbar />
     )
   }
 }
