@@ -70,7 +70,7 @@ React-searchbar provides users with the ability to configure the followin
 
 | `prop`  | Description              |  type | Example |
 |---------|--------------------------|----------|-------|
-|handleFieldChange|A callback to onChange from the search bar| *function()* | handleFieldChange={this.handleFieldChange}|
+|handleFieldChange|A callback to the onChange event from the search bar| *function()* | ```handleFieldChange={this.handleFieldChange}```|
 
 ## License
 
