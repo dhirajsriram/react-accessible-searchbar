@@ -43,7 +43,7 @@ import Searchbar from 'react-searchbar'
 class Example extends Component {
   render () {
     return (
-      <Searchbar handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={(e)=>this.handleSearch()} selectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
+      <Searchbar handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={(e)=>this.handleSearch()} handleSelectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
     )
   }
 }
@@ -70,8 +70,11 @@ React-searchbar provides users with the ability to configure the following throu
 
 | `prop`  | Description|  type | Example |
 |---------|------------|----------|-------|
-|handleFieldChange|A callback to the onChange event from the search bar| *function()* | ```handleFieldChange={this.handleFieldChange}```|
-
+|handleFieldChange|A callback to the onChange event from the search bar|*function()*| ```handleFieldChange={this.handleFieldChange}```|
+|autosuggestCount|The maximum number of elements to be displayed in the autosuggest list|*number*|``autosuggestCount={15}``|
+|handleSearch|A callback to the search submission|*function()*|```handleSearch={(e)=>this.handleSearch()}```|
+|handleSelectSuggestion|A callback from selection a suggestion from the autocomplete list|*function()*|handleSelectSuggestion={this.handleSelectedSuggestion}|
+|prompt|A array of items for autosuggestion|["item1", "item2", ...]|prompt={"Lary","Paige"}|
 ## License
 
 MIT © [dhirajsriram](https://github.com/dhirajsriram)
