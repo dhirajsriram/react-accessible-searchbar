@@ -14,8 +14,7 @@ export default class App extends Component {
   handleFieldChange(value) {
     this.setState({search:value})
   }
-  handleSearch = (ev) => {
-    console.log('came her')
+  handleSearch(event){
     /* CUSTOM PROP FOR SEARCH
     this.setState({ isLoaded: false })
     fetch(searchapi + this.state.search).then(res => res.json())
@@ -39,7 +38,7 @@ export default class App extends Component {
   render () {
     return (
       <div>
-        <Searchbar onChange={this.handleFieldChange} autosuggestCount={15} handleSearch={(e)=>this.handleSearch()} selectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
+        <Searchbar handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={this.handleSearch} handleSelectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
       </div>
     )
   }

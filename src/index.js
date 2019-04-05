@@ -14,7 +14,8 @@ export default class Searchbar extends Component {
 		};
 	}
 
-	searchInput = (e) => {
+	searchInput(event) {
+    event.persist();
 		const text = event.target.value;
 		if (event.target.value) {
 			this.setState({ search: text }, () => {
@@ -22,24 +23,25 @@ export default class Searchbar extends Component {
 					this.showAutosuggest();
 				}
 			});
-			this.props.onChange(text);
+			this.props.handleFieldChange(text);
 		} else {
 			this.clearSearch();
 		}
 	};
 
-	suggestionClick = (item) => {
+	suggestionClick(item,event){
 		if (item === 'See more link') {
 			this.expandList();
 		} else {
+      event.persist();
 			const suggestion = item;
 			this.setState({ search: item });
-			this.props.selectSuggestion(suggestion);
-			this.resetSuggestions();
+			this.props.handleSelectSuggestion(suggestion);
+			this.resetSuggestions(event);
 		}
 	};
 
-	resetSuggestions = () => {
+	resetSuggestions(event){
 		this.setState({ displaySuggestions: false, suggestions: [], cursor: 0 });
 	};
 
@@ -58,7 +60,8 @@ export default class Searchbar extends Component {
 		);
 	};
 
-	handleSuggestNav = () => {
+	handleSuggestNav(event){
+    event.persist();
 		const { cursor, suggestions } = this.state;
 		switch (event.keyCode) {
 			case 13:
@@ -75,9 +78,8 @@ export default class Searchbar extends Component {
 					this.setState({ search: this.state.suggestions[this.props.autosuggestCount] });
 				}
 				break;
-			case 38:
+      case 38:
 				if (cursor > 0) {
-					event.preventDefault();
 					this.setState(
 						{
 							cursor: this.state.cursor - 1
@@ -107,11 +109,11 @@ export default class Searchbar extends Component {
 				break;
 			case 27:
 				this.resetSuggestions();
-				break;
+        break;
 		}
 	};
 
-	clearSearch = (e) => {
+	clearSearch(){
 		this.setState({
 			results: {},
 			isLoaded: true,
@@ -120,9 +122,15 @@ export default class Searchbar extends Component {
 			SuggestionCount: this.props.autosuggestCount,
 			cursor: 0
 		});
-	};
+  };
 
-	expandList = (e) => {
+  submitHandler(event){
+    event.persist();
+    event.preventDefault();
+    this.props.handleSearch();
+  }
+
+	expandList(){
 		this.setState({ SuggestionCount: this.state.suggestions.length });
 		document.querySelector('#searchbar-input').focus();
 	};
@@ -134,20 +142,16 @@ export default class Searchbar extends Component {
 	render() {
 		return (
 			<form
-				onSubmit={(e) => {
-					event.preventDefault();
-					this.props.handleSearch();
-				}}
+				onSubmit={this.submitHandler.bind(this)}
 			>
 				<div className="searchbar-collection-container">
 					<div className="searchbar-container">
 						<input
 							type="text"
-							onKeyDown={(e) => this.handleSuggestNav()}
+							onKeyDown={this.handleSuggestNav.bind(this)}
 							id="searchbar-input"
 							className="searchbar-input"
-							onChange={(e) => this.searchInput()}
-							onFocus={this.setCursor}
+							onChange={this.searchInput.bind(this)}
 							name="st"
 							value={this.state.search}
 							maxLength="90"
@@ -156,19 +160,19 @@ export default class Searchbar extends Component {
 							autoComplete="off"
 							autoCorrect="off"
 							autocapitolize="off"
-							spellCheck="false"
+              spellCheck="false"
 						/>
 						{this.state.displaySuggestions &&
 						this.state.search && (
 							<ul className="list-autosuggest" aria-label="Suggested Results">
 								{this.state.suggestions.map((item, index) => (
 									<React.Fragment key={index}>
-										{index + 1 <= this.state.SuggestionCount && (
+										{ index + 1 <= this.state.SuggestionCount && (
 											<li
 												className={this.state.cursor === index ? 'active-suggestion' : null}
 												data-index={index}
 												key={index}
-												onClick={(e) => this.suggestionClick(item)}
+												onClick={this.suggestionClick.bind(this,item)}
 											>
 												<span className="autosuggest-links">
 													<strong>{item.substring(0, this.state.search.length)}</strong>
@@ -181,14 +185,14 @@ export default class Searchbar extends Component {
 								{this.state.suggestions.length > this.state.SuggestionCount && (
 									<li
 										data-index={this.state.SuggestionCount}
-										onClick={(e) => this.suggestionClick('See more link')}
+										onClick={this.suggestionClick.bind(this,"See more link")}
 										className={
 											this.state.cursor === this.state.SuggestionCount ? (
 												'active-suggestion'
 											) : null
 										}
 									>
-										<a href="javascript:void(0)" onClick={(e) => this.expandList()}>
+										<a href="javascript:void(0)" onClick={this.expandList.bind(this)}>
 											See more results
 										</a>
 									</li>
@@ -202,7 +206,7 @@ export default class Searchbar extends Component {
 								type="button"
 								aria-label="Clear search text"
 								className="buttons"
-								onClick={(e) => this.clearSearch()}
+								onClick={this.clearSearch.bind(this)}
 							>
 								<FaTimes />
 							</button>
