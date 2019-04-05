@@ -1,27 +1,42 @@
 import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
+
 export default class Searchbar extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { search: '', displaySuggestions: false, suggestions: [], cursor: 0 };
+		this.state = {
+			search: '',
+			displaySuggestions: false,
+			suggestions: [],
+			cursor: 0,
+			SuggestionCount: 0
+		};
 	}
 
 	searchInput = (e) => {
 		const text = event.target.value;
-		this.setState({ search: text }, () => {
-			if (this.state.search.length >= 2) {
-				this.showAutosuggest();
-			}
-		});
-		this.props.onChange(text);
+		if (event.target.value) {
+			this.setState({ search: text }, () => {
+				if (this.state.search.length >= 2) {
+					this.showAutosuggest();
+				}
+			});
+			this.props.onChange(text);
+		} else {
+			this.clearSearch();
+		}
 	};
 
 	suggestionClick = (item) => {
-		const suggestion = item;
-		this.setState({ search: item });
-		this.props.selectSuggestion(suggestion);
-		this.resetSuggestions();
+		if (item === 'See more link') {
+			this.expandList();
+		} else {
+			const suggestion = item;
+			this.setState({ search: item });
+			this.props.selectSuggestion(suggestion);
+			this.resetSuggestions();
+		}
 	};
 
 	resetSuggestions = () => {
@@ -29,64 +44,99 @@ export default class Searchbar extends Component {
 	};
 
 	showAutosuggest = () => {
-		this.setState({
-			suggestions: this.props.prompt.filter(
-				(option) => option.toLowerCase().indexOf(this.state.search.toLowerCase()) === 0
-			)
-		});
-		if (this.state.suggestions.length > 0) {
-			this.setState({ displaySuggestions: true }, () => {});
-		}
+		this.setState(
+			{
+				suggestions: this.props.prompt.filter(
+					(option) => option.toLowerCase().indexOf(this.state.search.toLowerCase()) === 0
+				)
+			},
+			() => {
+				if (this.state.suggestions.length > 0) {
+					this.setState({ displaySuggestions: true });
+				}
+			}
+		);
 	};
 
 	handleSuggestNav = () => {
 		const { cursor, suggestions } = this.state;
-		if (event.which == 13 || event.keyCode == 13) {
-			//code to execute here
-			this.setState({
-				search: this.state.suggestions[this.state.cursor],
-				results: {},
-				isLoaded: true,
-				displaySuggestions: false
-			});
-		} else {
-			if (event.keyCode === 38 && cursor > 0) {
-        event.preventDefault();
-				this.setState(
-					{
-						cursor: this.state.cursor - 1
-					},
-					() => {
-            this.setState({ search: this.state.suggestions[this.state.cursor] });
-          }
-          
-				);
-			} else if (event.keyCode === 40 && cursor < suggestions.length - 1) {
-				this.setState(
-					{
-						cursor: this.state.cursor + 1
-					},
-					() => {
-						this.setState({ search: this.state.suggestions[this.state.cursor] });
-					}
-				);
-			}
+		switch (event.keyCode) {
+			case 13:
+				if (this.state.cursor !== this.props.autosuggestCount) {
+					this.setState({
+						search: this.state.suggestions[this.state.cursor],
+						results: {},
+						isLoaded: true,
+						displaySuggestions: false
+					});
+				} else {
+					event.preventDefault();
+					this.expandList();
+					this.setState({ search: this.state.suggestions[this.props.autosuggestCount] });
+				}
+				break;
+			case 38:
+				if (cursor > 0) {
+					event.preventDefault();
+					this.setState(
+						{
+							cursor: this.state.cursor - 1
+						},
+						() => {
+							this.setState({
+								search: this.state.suggestions[this.state.cursor]
+							});
+						}
+					);
+				}
+				break;
+			case 40:
+				if (cursor < suggestions.length - 1 && cursor < this.state.SuggestionCount) {
+					this.setState(
+						{
+							cursor: this.state.cursor + 1
+						},
+						() => {
+							if (this.state.cursor !== this.state.SuggestionCount)
+								this.setState({
+									search: this.state.suggestions[this.state.cursor]
+								});
+						}
+					);
+				}
+				break;
+			case 27:
+				this.resetSuggestions();
+				break;
 		}
 	};
 
 	clearSearch = (e) => {
-		this.setState({ results: {}, isLoaded: true, displaySuggestions: false, search: '' });
-  };
-  
-  componentDidUpdate(){
-  }
+		this.setState({
+			results: {},
+			isLoaded: true,
+			displaySuggestions: false,
+			search: '',
+			SuggestionCount: this.props.autosuggestCount,
+			cursor: 0
+		});
+	};
+
+	expandList = (e) => {
+		this.setState({ SuggestionCount: this.state.suggestions.length });
+		document.querySelector('#searchbar-input').focus();
+	};
+
+	componentDidMount() {
+		this.setState({ SuggestionCount: this.props.autosuggestCount });
+	}
 
 	render() {
 		return (
 			<form
 				onSubmit={(e) => {
 					event.preventDefault();
-					this.props.search();
+					this.props.handleSearch();
 				}}
 			>
 				<div className="searchbar-collection-container">
@@ -96,13 +146,13 @@ export default class Searchbar extends Component {
 							onKeyDown={(e) => this.handleSuggestNav()}
 							id="searchbar-input"
 							className="searchbar-input"
-              onChange={(e) => this.searchInput()}
-              onFocus={this.setCursor}
+							onChange={(e) => this.searchInput()}
+							onFocus={this.setCursor}
 							name="st"
 							value={this.state.search}
 							maxLength="90"
 							placeholder="Search"
-							aria-label="Type to search. Navigate forward to hear suggestions"
+							aria-label="Type to search. Navigate below to hear suggestions"
 							autoComplete="off"
 							autoCorrect="off"
 							autocapitolize="off"
@@ -112,18 +162,37 @@ export default class Searchbar extends Component {
 						this.state.search && (
 							<ul className="list-autosuggest" aria-label="Suggested Results">
 								{this.state.suggestions.map((item, index) => (
-									<li
-										className={this.state.cursor === index ? 'active-suggestion' : null}
-										data-index={index}
-										key={index}
-										onClick={(e) => this.suggestionClick(item)}
-									>
-										<span className="autosuggest-links">
-											<strong>{item.substring(0, this.state.search.length)}</strong>
-											{item.substring(this.state.search.length, item.length)}
-										</span>
-									</li>
+									<React.Fragment key={index}>
+										{index + 1 <= this.state.SuggestionCount && (
+											<li
+												className={this.state.cursor === index ? 'active-suggestion' : null}
+												data-index={index}
+												key={index}
+												onClick={(e) => this.suggestionClick(item)}
+											>
+												<span className="autosuggest-links">
+													<strong>{item.substring(0, this.state.search.length)}</strong>
+													{item.substring(this.state.search.length, item.length)}
+												</span>
+											</li>
+										)}
+									</React.Fragment>
 								))}
+								{this.state.suggestions.length > this.state.SuggestionCount && (
+									<li
+										data-index={this.state.SuggestionCount}
+										onClick={(e) => this.suggestionClick('See more link')}
+										className={
+											this.state.cursor === this.state.SuggestionCount ? (
+												'active-suggestion'
+											) : null
+										}
+									>
+										<a href="javascript:void(0)" onClick={(e) => this.expandList()}>
+											See more results
+										</a>
+									</li>
+								)}
 							</ul>
 						)}
 					</div>
