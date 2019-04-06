@@ -90,15 +90,15 @@ npm run test
 ```
 ### Following are the available test cases
 
-- Renders a form (49ms)
-- Renders an input field (6ms)
-- Renders an search button (4ms)
-- Never renders the close button in the beggining (4ms)
-- Sets the autosuggest count from props and should be a number (1ms)
+- Renders a form 
+- Renders an input field 
+- Renders an search button 
+- Never renders the close button in the beggining 
+- Sets the autosuggest count from props and should be a number 
 - Sets the autosuggest list from props and should be an array
-- Does not display autosuggest by default (7ms)
-- The handleFieldChange handler is triggered on input change (10ms)
-- The handleSearch handler is triggered on form (6ms)
+- Does not display autosuggest by default 
+- The handleFieldChange handler is triggered on input change
+- The handleSearch handler is triggered on form 
 
 ## Running Locally
 

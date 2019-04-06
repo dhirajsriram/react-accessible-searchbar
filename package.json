@@ -1,10 +1,20 @@
 {
   "name": "react-searchbar",
   "version": "0.0.1",
-  "description": "A customizable react search-bar",
+  "description": "A prebuilt react search-bar with Accesibility, Autosuggest and Callbacks",
   "author": "dhirajsriram",
   "license": "MIT",
-  "repository": "dhirajsriram/react-searchbar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhirajsriram/react-searchbar.git"
+  },
+  "keywords": [
+    "react",
+    "searchbar",
+    "accessbility",
+    "autosuggest",
+    "autocomplete"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
