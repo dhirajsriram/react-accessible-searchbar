@@ -76,7 +76,7 @@ React-searchbar provides users with the ability to configure the following throu
 | `prop`  | Description|  type | Example |
 |---------|------------|----------|-------|
 |handleFieldChange|A callback to the onChange event from the search bar|*function()*| ```handleFieldChange={this.handleFieldChange}```|
-|autosuggestCount|The maximum number of elements to be displayed in the autosuggest list|*number*|``autosuggestCount={15}``|
+|autosuggestCount|The maximum number of elements to be displayed in the autosuggest list|number|``autosuggestCount={15}``|
 |handleSearch|A callback to the search submission|*function()*|```handleSearch={(e)=>this.handleSearch()}```|
 |handleSelectSuggestion|A callback from selection a suggestion from the autocomplete list|*function()*|```handleSelectSuggestion={this.handleSelectedSuggestion}```|
 |prompt|A array of items for autosuggestion|["item1", "item2", ...]|```prompt={"Lary","Paige"}```|
