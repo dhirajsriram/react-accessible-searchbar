@@ -29,6 +29,7 @@ class Example extends Component {
   }
 }
 ```
+
 ### Examples
 
 #### Basic use case
@@ -48,7 +49,9 @@ class Example extends Component {
   }
 }
 ```
+
 This will inturn generate a HTML as the following
+
 ```html
 <form>
    <div class="searchbar-collection-container">
@@ -65,7 +68,9 @@ This will inturn generate a HTML as the following
    </div>
 </form>
 ```
+
 ## Props
+
 React-searchbar provides users with the ability to configure the following through props
 
 | `prop`  | Description|  type | Example |
@@ -75,6 +80,7 @@ React-searchbar provides users with the ability to configure the following throu
 |handleSearch|A callback to the search submission|*function()*|```handleSearch={(e)=>this.handleSearch()}```|
 |handleSelectSuggestion|A callback from selection a suggestion from the autocomplete list|*function()*|```handleSelectSuggestion={this.handleSelectedSuggestion}```|
 |prompt|A array of items for autosuggestion|["item1", "item2", ...]|```prompt={"Lary","Paige"}```|
+
 ## License
 
 MIT © [dhirajsriram](https://github.com/dhirajsriram)
