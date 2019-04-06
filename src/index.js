@@ -17,13 +17,17 @@ export default class Searchbar extends Component {
 	searchInput(event) {
     event.persist();
 		const text = event.target.value;
+		
 		if (event.target.value) {
 			this.setState({ search: text }, () => {
-				if (this.state.search.length >= 2) {
+				if (this.state.search.length >= 2 && this.props.prompt) {
+					console.log("called autosuggest")
 					this.showAutosuggest();
 				}
 			});
+			if(this.props.handleFieldChange){
 			this.props.handleFieldChange(text);
+		}
 		} else {
 			this.clearSearch();
 		}
@@ -150,6 +154,7 @@ export default class Searchbar extends Component {
 							type="text"
 							onKeyDown={this.handleSuggestNav.bind(this)}
 							id="searchbar-input"
+							name="searchbar-input"
 							className="searchbar-input"
 							onChange={this.searchInput.bind(this)}
 							name="st"
@@ -202,7 +207,7 @@ export default class Searchbar extends Component {
 					</div>
 					<div className="searchbar-buttons-container">
 						{this.state.search && (
-							<button
+							<button id="clear-button"
 								type="button"
 								aria-label="Clear search text"
 								className="buttons"
