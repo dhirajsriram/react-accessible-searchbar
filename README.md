@@ -81,6 +81,55 @@ React-searchbar provides users with the ability to configure the following throu
 |handleSelectSuggestion|A callback from selection a suggestion from the autocomplete list|*function()*|```handleSelectSuggestion={this.handleSelectedSuggestion}```|
 |prompt|A array of items for autosuggestion|["item1", "item2", ...]|```prompt={"Lary","Paige"}```|
 
+## Tests
+
+To run the tests simply run
+
+```bash
+npm run test
+```
+### Following are the available test cases
+
+- Renders a form (49ms)
+- Renders an input field (6ms)
+- Renders an search button (4ms)
+- Never renders the close button in the beggining (4ms)
+- Sets the autosuggest count from props and should be a number (1ms)
+- Sets the autosuggest list from props and should be an array
+- Does not display autosuggest by default (7ms)
+- The handleFieldChange handler is triggered on input change (10ms)
+- The handleSearch handler is triggered on form (6ms)
+
+## Running Locally
+
+#### clone repo
+
+`git clone https://github.com/dhirajsriram/react-searchbar.git`
+
+#### move into folder
+
+`cd react-searchbar`
+
+#### install dependencies
+
+`npm install` or `yarn`
+
+#### Build the search component
+
+`npm run start`
+
+#### Run the example application
+
+`cd example`
+
+`npm run start`
+
+#### open your browser and visit:
+
+`http://localhost:3000/`
+
+
+
 ## License
 
 MIT © [dhirajsriram](https://github.com/dhirajsriram)
