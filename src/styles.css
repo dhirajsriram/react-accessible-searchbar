@@ -1,5 +1,5 @@
 .searchbar-collection-container{
-  border:1px solid gray;
+  border:2px solid #c5cbd5;
   border-radius: 5px;
   display: inline-flex;
   font-size:20px; 
@@ -7,15 +7,18 @@
 }
 .searchbar-container{
   display: flex;
-  flex: 0 0 80%;
+  flex-grow: 1
 }
 .searchbar-input {
   border:0px;
-  padding:10px;
-  width:100%
+  padding: 8px 28px 8px 8px;
+  width:100%;
+  font-weight: bold;
+}
+.searchbar-input::-ms-clear {
+  display: none;
 }
 .searchbar-buttons-container{
- width:20%;
  display:flex;
  justify-content: flex-end;
 }
@@ -24,4 +27,33 @@
   border:0px;
   padding:10px;
   cursor:pointer;
+}
+.list-autosuggest{
+  background-color: #fff;
+  border: 1px solid #c5cbd5;
+  box-shadow: 4px 6px 16px rgba(48,48,48,.25);
+  top: 2px;
+  margin-top: 36px;
+  left:0px;
+  padding:0;
+  position: absolute;
+  z-index: 999999;
+  width:100%;
+  list-style: none;
+  font-size: 13px;
+  cursor:pointer;
+}
+.list-autosuggest >li{
+  width:100%;
+  padding: 10px 10px;
+  border-bottom:1px solid #c5cbd5;
+}
+
+.active-suggestion{
+  background:lightgray;
+}
+.list-autosuggest >li:last-child{
+  border-bottom:0px;
+  text-decoration: none;
+  color:#262626
 }

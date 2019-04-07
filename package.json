@@ -1,13 +1,17 @@
 {
-  "name": "react-searchbar",
-  "version": "0.0.1",
+  "name": "react-accessible-searchbar",
+  "version": "1.0.0",
   "description": "A prebuilt react search-bar with Accesibility, Autosuggest and Callbacks",
   "author": "dhirajsriram",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dhirajsriram/react-searchbar.git"
+    "url": "https://github.com/dhirajsriram/react-accessible-searchbar.git"
   },
+  "bugs": {
+    "url": "https://github.com/dhirajsriram/react-accessible-searchbar/issues"
+  },
+  "homepage": "https://github.com/dhirajsriram/react-accessible-searchbar#readme",
   "keywords": [
     "react",
     "searchbar",

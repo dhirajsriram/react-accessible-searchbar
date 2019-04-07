@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
-
+import styles from './styles.css'
 export default class Searchbar extends Component {
 	constructor(props) {
 		super(props);
+		this.node = React.createRef();
 		this.state = {
 			search: '',
 			displaySuggestions: false,
@@ -21,7 +22,6 @@ export default class Searchbar extends Component {
 		if (event.target.value) {
 			this.setState({ search: text }, () => {
 				if (this.state.search.length >= 2 && this.props.prompt) {
-					console.log("called autosuggest")
 					this.showAutosuggest();
 				}
 			});
@@ -84,6 +84,7 @@ export default class Searchbar extends Component {
 				break;
       case 38:
 				if (cursor > 0) {
+					event.preventDefault();
 					this.setState(
 						{
 							cursor: this.state.cursor - 1
@@ -140,7 +141,20 @@ export default class Searchbar extends Component {
 	};
 
 	componentDidMount() {
+		document.addEventListener('mousedown',this.closeSuggestions.bind(this),false)
 		this.setState({ SuggestionCount: this.props.autosuggestCount });
+	}
+	componentDidUpdate() {
+		console.log(this.node)
+	}
+
+	componentWillUnmount(){
+		document.addEventListener('mousedown',this.closeSuggestions.bind(this),false)
+	}
+	closeSuggestions(event){
+		if(event.target.contains(this.node.current)){
+       this.resetSuggestions()
+		}
 	}
 
 	render() {
@@ -148,14 +162,14 @@ export default class Searchbar extends Component {
 			<form
 				onSubmit={this.submitHandler.bind(this)}
 			>
-				<div className="searchbar-collection-container">
-					<div className="searchbar-container">
+				<div className={styles["searchbar-collection-container"]}>
+					<div className={styles["searchbar-container"]}>
 						<input
 							type="text"
 							onKeyDown={this.handleSuggestNav.bind(this)}
 							id="searchbar-input"
 							name="searchbar-input"
-							className="searchbar-input"
+							className={styles["searchbar-input"]}
 							onChange={this.searchInput.bind(this)}
 							name="st"
 							value={this.state.search}
@@ -169,17 +183,17 @@ export default class Searchbar extends Component {
 						/>
 						{this.state.displaySuggestions &&
 						this.state.search && (
-							<ul className="list-autosuggest" aria-label="Suggested Results">
+							<ul ref={this.node} className={styles["list-autosuggest"]} aria-label="Suggested Results">
 								{this.state.suggestions.map((item, index) => (
 									<React.Fragment key={index}>
 										{ index + 1 <= this.state.SuggestionCount && (
 											<li
-												className={this.state.cursor === index ? 'active-suggestion' : null}
+												className={this.state.cursor === index ? styles["active-suggestion"] : null}
 												data-index={index}
 												key={index}
 												onClick={this.suggestionClick.bind(this,item)}
 											>
-												<span className="autosuggest-links">
+												<span className={styles["autosuggest-links"]}>
 													<strong>{item.substring(0, this.state.search.length)}</strong>
 													{item.substring(this.state.search.length, item.length)}
 												</span>
@@ -193,7 +207,7 @@ export default class Searchbar extends Component {
 										onClick={this.suggestionClick.bind(this,"See more link")}
 										className={
 											this.state.cursor === this.state.SuggestionCount ? (
-												'active-suggestion'
+												styles["active-suggestion"]
 											) : null
 										}
 									>
@@ -205,7 +219,7 @@ export default class Searchbar extends Component {
 							</ul>
 						)}
 					</div>
-					<div className="searchbar-buttons-container">
+					<div className={styles["searchbar-buttons-container"]}>
 						{this.state.search && (
 							<button id="clear-button"
 								type="button"
@@ -216,7 +230,7 @@ export default class Searchbar extends Component {
 								<FaTimes />
 							</button>
 						)}
-						<button type="submit" className="buttons" aria-label="submit search" title="Search">
+						<button type="submit" className={styles["buttons"]} aria-label="submit search" title="Search">
 							<FaSearch />
 						</button>
 					</div>

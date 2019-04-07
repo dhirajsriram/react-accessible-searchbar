@@ -1,4 +1,4 @@
-# react-searchbar
+# react-accessible-searchbar
 
 A prebuilt react searchbar with
 
@@ -83,7 +83,7 @@ React-searchbar provides users with the ability to configure the following throu
 
 ## Tests
 
-To run the tests simply run
+To run the tests simply navigate to the root folder and run
 
 ```bash
 npm run test

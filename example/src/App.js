@@ -38,7 +38,7 @@ export default class App extends Component {
   render () {
     return (
       <div>
-        <Searchbar handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={this.handleSearch} handleSelectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
+        <Searchbar ref={node=>this.node = node} handleFieldChange={this.handleFieldChange} autosuggestCount={15} handleSearch={this.handleSearch} handleSelectSuggestion={this.handleSelectedSuggestion} prompt={names}></Searchbar>
       </div>
     )
   }
